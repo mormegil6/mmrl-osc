@@ -4,3 +4,4 @@ python-osc>=1.8    # OSC UDP output
 
 # Optional: only for --vqf host-side fusion mode (also pulls in numpy)
 # vqf>=2.0
+

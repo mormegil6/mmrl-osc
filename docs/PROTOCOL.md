@@ -140,6 +140,45 @@ which keeps the heading stable in electromagnetically noisy environments.
 
 ---
 
+## Temperature (module 0x04)
+
+Read-based and multi-channel. On the MMRL the channel-to-source map (from a
+module-info read `[0x04, 0x80]`) is:
+
+| Channel | Source | Notes |
+|---------|--------|-------|
+| 0 | NRF_SOC (nRF52 on-die) | always available; the one used here |
+| 1 | PRESET_THERM | not populated |
+| 2 | EXT_THERM | not populated |
+| 3 | BMP280 | not populated (read returns 0) |
+
+The BMI160 die temperature is not exposed by the firmware, so channel 0 (the
+nRF52 SoC) is used as a co-located board-temperature proxy. Poll once per second
+by reading the TEMPERATURE register (0x01) with the read bit set:
+`[0x04, 0x81, 0x00]`; the response is `[0x04, 0x81, channel]` + int16 LE. The
+metawear SDK pre-scales this to Celsius; over raw GATT, apply the module's
+1/8 C per LSB: `temp_c = raw / 8.0` (verified live: raw ~210 -> 26.3 C). This is
+NOT the BMI160-native `raw/512 + 23` (that is the chip's own register). The
+source is read-only, so no enable or teardown is needed; the MODE register
+(0x02) only configures an external thermistor's pins and would misconfigure the
+channel.
+
+### BMI160 die temperature: not accessible
+
+The BMI160's own die-temperature register (`0x20/0x21`, `raw/512 + 23`) cannot be
+reached from the host. The firmware surfaces it through no module: the
+temperature module offers only the sources above, and the Bosch acc/gyro modules
+expose no temperature signal. The I2C serial-passthrough module (0x0D) is present
+and functional, but a full bus scan (`[0x0D, 0x81, addr, 0x00, id, 0x01]` for
+addr 0x08-0x77) acked all 112 reads and returned data on none, including 0x68 and
+0x69 - so the IMU is on SPI, not the passthrough I2C bus. SPI passthrough would
+need the BMI160's exact nRF52 chip-select/clock/MOSI/MISO pins (undocumented) and
+would collide with the firmware's own SPI traffic during streaming. The NRF_SOC
+(nRF52 on-die) reading is therefore used as a co-located board-temperature proxy:
+it correlates with, but is not identical to, the gyroscope die temperature.
+
+---
+
 ## LED (module 0x02)
 
 Registers: `0x01` play, `0x02` stop, `0x03` pattern config. Colors are
