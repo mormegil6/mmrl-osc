@@ -81,6 +81,10 @@ reimplemented in any language.
   first (the engine consumes them), then the fusion output is enabled and the
   quaternion register subscribed. Skipping the raw-sensor setup, or the
   subscribe, leaves the engine reporting enabled while emitting no data.
+- The on-board BSX fusion runs at a fixed ~100 Hz. Its config sets only the mode
+  (NDOF) and the accel/gyro ranges - there is no output-rate field - so the
+  quaternion rate is not selectable over BLE. A lower rate could save battery, but
+  it would have to be set on-device and the firmware does not expose that.
 - The raw data registers are not uniform: accelerometer data is on register
   `0x04`, but gyroscope and magnetometer data are on `0x05` (used by `--vqf`).
 - IEM SceneRotator accepts the individual `/SceneRotator/qw,qx,qy,qz` parameters
