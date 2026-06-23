@@ -645,12 +645,20 @@ async def find_metawear(scan_time=6.0):
 # Streaming session (one connection); returns on disconnect so the caller retries
 # ---------------------------------------------------------------------------
 async def put_to_sleep(client):
-    """Send the power-down sequence; the device wakes on a button press."""
+    """Send the power-down sequence; the device wakes on a button press.
+
+    The power-save enable is acknowledged (response=True) so we know it landed;
+    the reset that follows is fire-and-forget (the device resets before it could
+    ack), with a short settle so CoreBluetooth actually transmits it before the
+    connection is torn down - otherwise the reset is dropped and it stays awake.
+    """
     print("\n[sleep] powering down; press the button to wake")
     try:
-        for cmd in SLEEP_SEQ:
-            await client.write_gatt_char(MW_CMD_CHAR, cmd, response=False)
+        for i, cmd in enumerate(SLEEP_SEQ):
+            last = i == len(SLEEP_SEQ) - 1
+            await client.write_gatt_char(MW_CMD_CHAR, cmd, response=not last)
             await asyncio.sleep(0.05)
+        await asyncio.sleep(0.25)   # let the reset go out before we disconnect
         return True
     except Exception:
         return False
