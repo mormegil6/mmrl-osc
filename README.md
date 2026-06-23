@@ -224,7 +224,8 @@ Choosing a renderer:
 
 Point the renderer's OSC receive at `127.0.0.1` on the profile's port (shown by
 `--list-profiles`). Tap the button or press **Enter** while looking forward to
-zero the heading; hold the button to put the device to sleep.
+zero the heading; type **`i`** then Enter to flash the LED magenta and locate the
+device; hold the button to put the device to sleep.
 
 ### Testing without a plugin
 
