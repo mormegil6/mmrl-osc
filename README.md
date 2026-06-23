@@ -57,7 +57,7 @@ Part of a set of open head-tracking tools for spatial audio:
 
 - **Busola** - a macOS menu-bar app that turns head trackers (including this one)
   into OSC sources; the GUI front-end built on this bridge (separate repo).
-- **OpenNx** ([GitLab](https://git.pg.edu.pl/p829296/opennx) / [GitHub](https://github.com/mormegil6/opennx)) - Waves Nx head tracker → OSC bridge, cross-platform (macOS / Windows / Linux)
+- **OpenNx** ([GitLab](https://git.pg.edu.pl/p829296/opennx) / [GitHub](https://github.com/mormegil6/opennx)) - Waves Nx head tracker -> OSC bridge, cross-platform (macOS / Windows / Linux)
 - **jabra-elite10-re** ([GitLab](https://git.pg.edu.pl/p829296/jabra-elite10-re) / [GitHub](https://github.com/mormegil6/jabra-elite10-re)) - Jabra Elite 10 Gen 2 BLE GATT protocol reverse-engineering (head-tracking service + Fast Pair auth)
 
 ## Why this exists
