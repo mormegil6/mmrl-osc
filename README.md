@@ -280,6 +280,22 @@ build them locally or attach the binary to a release.
   renderer - each applies that renderer's axis/sign convention (verified against
   [Supperware Bridgehead](https://supperware.co.uk/headtracker-bridgehead)). The
   generic `Quaternion`/`YPR` profiles send unremapped values if you need a raw feed.
+- **Connects, then drops repeatedly:** almost always 2.4 GHz radio interference,
+  not the bridge. The MetaMotion RL is a coin-sized, ultra-low-power tag with a
+  tiny chip antenna, so its BLE link is easily disturbed. The biggest and least
+  obvious culprit is **USB 3.x / Thunderbolt docks, hubs and bus-powered SSDs**,
+  which radiate broadband noise around 2.4 GHz. It is strongest at contact but,
+  against the RL's weak transmitter, still bites from 10-20 cm - it does not take
+  direct contact. Reproduced here: a closed-lid laptop on a 15 cm aluminium stand
+  dropped the RL repeatedly while a Thunderbolt dock (Plugable TBT4-UDZ, ~3.6 cm
+  tall) and an audio interface (RME Digiface Dante, ~2.6 cm tall) sat ~10 cm below
+  it - not touching - and held once moved aside. Keep the Mac away from docks, hubs and
+  drives, keep the tracker within ~1 m line of sight, and keep other
+  2.4 GHz sources (Wi-Fi, other Bluetooth, GPU render boxes whose power transients
+  spike the noise floor) clear. The bridge reconnects every 3 s, so it recovers on
+  its own once the link is clean. Reference: Intel, *USB 3.0 Radio Frequency
+  Interference Impact on 2.4 GHz Wireless Devices*, white paper
+  [327216-001](https://www.usb.org/sites/default/files/327216.pdf), April 2012.
 
 ## Roadmap
 
