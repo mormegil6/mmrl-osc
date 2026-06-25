@@ -5,6 +5,8 @@
 Use an Mbientlab **MetaMotion RL** (MMRL) as a head tracker for spatial audio on
 **macOS**.
 
+> **There's a GUI app: Busola** ([GitLab](https://git.pg.edu.pl/p829296/busola-app) / [GitHub](https://github.com/mormegil6/busola-app)). A menu-bar app that drives this tracker - plus Waves Nx, Supperware and MrHeadTracker - with device memory, live profile-switching and CSV logging. This repo is the bridge it's built on.
+
 The script connects to the MMRL over Bluetooth LE, runs the sensor's on-board
 Bosch BSX NDOF (9-axis) fusion (or, with `--vqf`, host-side VQF - Versatile
 Quaternion-based Filter - fusion of the raw IMU), and sends the head-tracking
