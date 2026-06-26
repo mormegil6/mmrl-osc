@@ -1,6 +1,6 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)]() [![bleak](https://img.shields.io/badge/bleak-BLE-1F6FEB.svg)]() [![python-osc](https://img.shields.io/badge/python--osc-OSC-1F6FEB.svg)]() [![VQF](https://img.shields.io/badge/VQF-optional-1F6FEB.svg)]() [![macOS](https://img.shields.io/badge/macOS-arm64%2Fx86__64-000000.svg?logo=apple&logoColor=white)]() [![Device](https://img.shields.io/badge/device-MetaMotion%20RL%20%C2%B7%20BMI160%20%2B%20BMM150-8A2BE2.svg)]() [![Protocol](https://img.shields.io/badge/protocol-reverse--engineered-007808.svg)](docs/PROTOCOL.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-# mmrl_osc - MetaMotion RL head tracker OSC bridge
+# openMMRL - MetaMotion RL head tracker OSC bridge
 
 Use an Mbientlab **MetaMotion RL** (MMRL) as a head tracker for spatial audio on
 **macOS**.
@@ -12,7 +12,7 @@ Bosch BSX NDOF (9-axis) fusion (or, with `--vqf`, host-side VQF - Versatile
 Quaternion-based Filter - fusion of the raw IMU), and sends the head-tracking
 orientation as OSC to a chosen spatial-audio
 renderer. Each renderer wants a particular OSC address, argument order, per-axis
-sign convention and UDP port, so mmrl-osc uses selectable **profiles**
+sign convention and UDP port, so openMMRL uses selectable **profiles**
 (`--profile`) rather than a few fixed addresses.
 
 <details>
@@ -215,7 +215,7 @@ Choosing a renderer:
 - The profile sets the address, mapping **and port**; `--port` is an optional
   override of that port.
 - `--profile` can be repeated to drive several renderers at once. If two selected
-  profiles share a port they would collide on the same UDP socket, so mmrl-osc
+  profiles share a port they would collide on the same UDP socket, so openMMRL
   refuses and lists the clash; give them different ports or pass
   `--force-collision` to send anyway.
 
@@ -244,14 +244,14 @@ Build a single signed executable for Apple Silicon with PyInstaller:
 
 ```bash
 pip install pyinstaller
-pyinstaller --onefile --name mmrl-osc \
+pyinstaller --onefile --name openmmrl \
   --hidden-import bleak.backends.corebluetooth \
   --hidden-import bleak.backends.corebluetooth.scanner \
   --hidden-import bleak.backends.corebluetooth.client \
   mmrl_osc.py
-codesign --deep --force --sign - dist/mmrl-osc   # ad-hoc sign
+codesign --deep --force --sign - dist/openmmrl   # ad-hoc sign
 
-./dist/mmrl-osc
+./dist/openmmrl
 ```
 
 For `--vqf` in the binary, add `--hidden-import vqf --hidden-import vqf.vqf
