@@ -1,7 +1,7 @@
 """
 profiles.py - selectable OSC output profiles for head-tracker bridges.
 
-SHARED FILE - kept identical in the `mmrl-osc` and `opennx` repos. If you edit it
+SHARED FILE - kept identical in the openMMRL, openNx and supperware-vqf repos. If you edit it
 in one, copy it to the other so the two bridges stay consistent.
 
 Each profile maps the bridge's internal orientation (a tared quaternion, plus

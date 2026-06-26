@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-osc_monitor.py - OSC listener for testing mmrl_osc.py.
+osc_monitor.py - OSC listener for testing openmmrl.py.
 
 Prints every OSC message received on the given port, so the head-tracker output
 can be checked without IEM/SPARTA/Virtuoso running.
@@ -20,7 +20,7 @@ def show(address, *args):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="OSC monitor for mmrl_osc.py")
+    ap = argparse.ArgumentParser(description="OSC monitor for openmmrl.py")
     ap.add_argument("--ip", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8000)
     args = ap.parse_args()

@@ -46,8 +46,8 @@ Each profile applies the correct address, per-axis sign/swap and port. Axis and
 sign conventions are verified against
 [Supperware Bridgehead](https://supperware.co.uk/headtracker-bridgehead)'s
 profile list. You can add your own in `~/Library/Application
-Support/mmrl-osc/profiles.txt` (four lines per profile - name, address, args,
-port - in Supperware's `Profiles.txt` format); `mmrl_osc.py` loads them on top of
+Support/openmmrl/profiles.txt` (four lines per profile - name, address, args,
+port - in Supperware's `Profiles.txt` format); `openmmrl.py` loads them on top of
 the built-in profiles.
 
 **Protocol:** the full reverse-engineered MetaWear GATT protocol and hardware
@@ -111,7 +111,7 @@ motors, laptops, steel) the way a plain 9-axis fusion would be. It falls back to
 
 ```bash
 pip install vqf          # required for --vqf (pulls in numpy)
-python mmrl_osc.py --vqf
+python openmmrl.py --vqf
 ```
 
 The terminal shows a `[VQF]` prefix in this mode. The board temperature is read
@@ -138,7 +138,7 @@ alongside the gyro bias and heading supports characterising how much heading
 drift is thermal versus random.
 
 ```bash
-python mmrl_osc.py --vqf --log drift.csv
+python openmmrl.py --vqf --log drift.csv
 ```
 
 ## Sleep and wake
@@ -190,21 +190,21 @@ python3 -m venv mmrl-venv
 source mmrl-venv/bin/activate
 pip install -r requirements.txt
 
-python mmrl_osc.py                 # scan, then pick a device by number
+python openmmrl.py                 # scan, then pick a device by number
 ```
 
 Skip the scan with a known UUID (printed during the scan):
 
 ```bash
-python mmrl_osc.py --device XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-python mmrl_osc.py --profile SPARTA        # emit the SPARTA profile (port 9000)
-python mmrl_osc.py --profile "APL Virtuoso" --port 8001   # override the port
-python mmrl_osc.py --list-profiles         # show every profile and exit
-python mmrl_osc.py --all           # list all BLE devices if no MetaWear is found
-python mmrl_osc.py --vqf           # host-side VQF fusion (needs the vqf package)
-python mmrl_osc.py --vqf --log drift.csv   # also log temp/bias/heading at ~1 Hz
-python mmrl_osc.py --sleep-timeout 600     # auto-sleep after 10 min idle (0 = never)
-python mmrl_osc.py --no-sleep-on-exit      # keep advertising after Ctrl-C
+python openmmrl.py --device XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+python openmmrl.py --profile SPARTA        # emit the SPARTA profile (port 9000)
+python openmmrl.py --profile "APL Virtuoso" --port 8001   # override the port
+python openmmrl.py --list-profiles         # show every profile and exit
+python openmmrl.py --all           # list all BLE devices if no MetaWear is found
+python openmmrl.py --vqf           # host-side VQF fusion (needs the vqf package)
+python openmmrl.py --vqf --log drift.csv   # also log temp/bias/heading at ~1 Hz
+python openmmrl.py --sleep-timeout 600     # auto-sleep after 10 min idle (0 = never)
+python openmmrl.py --no-sleep-on-exit      # keep advertising after Ctrl-C
 ```
 
 Choosing a renderer:
@@ -248,7 +248,7 @@ pyinstaller --onefile --name openmmrl \
   --hidden-import bleak.backends.corebluetooth \
   --hidden-import bleak.backends.corebluetooth.scanner \
   --hidden-import bleak.backends.corebluetooth.client \
-  mmrl_osc.py
+  openmmrl.py
 codesign --deep --force --sign - dist/openmmrl   # ad-hoc sign
 
 ./dist/openmmrl
@@ -300,8 +300,8 @@ build them locally or attach the binary to a release.
 
 | File | Purpose |
 |---|---|
-| `mmrl_osc.py` | the head tracker bridge (CLI) |
-| `profiles.py` | OSC renderer profiles (shared file, kept in sync with opennx) |
+| `openmmrl.py` | the head tracker bridge (CLI) |
+| `profiles.py` | OSC renderer profiles (shared file, kept in sync with openNx) |
 | `osc_monitor.py` | OSC listener for testing |
 | `requirements.txt` | bleak, python-osc (optional vqf) |
 | `docs/PROTOCOL.md` | full reverse-engineered protocol |
@@ -311,7 +311,7 @@ build them locally or attach the binary to a release.
 Part of a set of open head-tracking tools for spatial audio:
 
 - **Busola** ([GitLab](https://git.pg.edu.pl/p829296/busola-app) / [GitHub](https://github.com/mormegil6/busola-app)) - the menu-bar **app**: one GUI for several head trackers (MetaMotion RL, Waves Nx, Supperware, MrHeadTracker), with device discovery, remembered devices, live profile-switching and CSV logging - the conveniences these CLI bridges leave out
-- **OpenNx** ([GitLab](https://git.pg.edu.pl/p829296/opennx) / [GitHub](https://github.com/mormegil6/opennx)) - Waves Nx head tracker -> OSC bridge, cross-platform (macOS / Windows / Linux)
+- **openNx** ([GitLab](https://git.pg.edu.pl/p829296/opennx) / [GitHub](https://github.com/mormegil6/opennx)) - Waves Nx head tracker -> OSC bridge, cross-platform (macOS / Windows / Linux)
 - **jabra-elite10-re** ([GitLab](https://git.pg.edu.pl/p829296/jabra-elite10-re) / [GitHub](https://github.com/mormegil6/jabra-elite10-re)) - Jabra Elite 10 Gen 2 BLE GATT protocol reverse-engineering (head-tracking service + Fast Pair auth)
 
 ## License

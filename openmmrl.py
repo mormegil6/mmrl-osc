@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-mmrl_osc.py - MetaMotion RL head tracker with OSC output for macOS.
+openmmrl.py - MetaMotion RL head tracker with OSC output for macOS.
 
 Connects to an Mbientlab MetaMotion RL over BLE (bleak / CoreBluetooth) and sends
 the orientation quaternion as OSC for IEM SceneRotator, SPARTA (/ypr) and APL
@@ -908,7 +908,7 @@ def main():
 
     # User-defined profiles (shared with the menu-bar app).
     profiles.add_from_file(os.path.expanduser(
-        "~/Library/Application Support/mmrl-osc/profiles.txt"))
+        "~/Library/Application Support/openmmrl/profiles.txt"))
 
     if args.list_profiles:
         print(profiles.format_list())
