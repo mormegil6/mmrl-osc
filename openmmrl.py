@@ -906,9 +906,19 @@ def main():
                              "putting it to sleep")
     args = parser.parse_args()
 
-    # User-defined profiles (shared with the menu-bar app).
-    profiles.add_from_file(os.path.expanduser(
-        "~/Library/Application Support/openmmrl/profiles.txt"))
+    # User-defined profiles (shared with the menu-bar app). One-time migration: move
+    # the file from the pre-rename "mmrl-osc" support dir so custom profiles survive the
+    # mmrl-osc -> openmmrl rename. No-op once the new file exists or there's nothing to move.
+    _prof_new = os.path.expanduser("~/Library/Application Support/openmmrl/profiles.txt")
+    _prof_old = os.path.expanduser("~/Library/Application Support/mmrl-osc/profiles.txt")
+    if not os.path.exists(_prof_new) and os.path.isfile(_prof_old):
+        try:
+            os.makedirs(os.path.dirname(_prof_new), exist_ok=True)
+            os.rename(_prof_old, _prof_new)
+            print(f"[profiles] migrated {_prof_old} -> {_prof_new}")
+        except OSError:
+            pass
+    profiles.add_from_file(_prof_new)
 
     if args.list_profiles:
         print(profiles.format_list())
