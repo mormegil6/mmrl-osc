@@ -317,7 +317,7 @@ Part of a set of open head-tracking tools for spatial audio:
 ## License
 
 MIT. See [LICENSE](LICENSE). Independent, clean-room reimplementation for
-interoperability; not affiliated with or endorsed by mbientlab Inc.
+interoperability; not affiliated with or endorsed by Mbientlab Inc.
 
 ## Contact
 
